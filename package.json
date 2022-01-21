@@ -1,0 +1,28 @@
+{
+    "name": "pandaim",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/AilurusRedPanda/PandaIM.git"
+    },
+    "keywords": [
+        "chat"
+    ],
+    "author": "AilurusRedPanda",
+    "license": "GPL-3.0-or-later",
+    "bugs": {
+        "url": "https://github.com/AilurusRedPanda/PandaIM/issues"
+    },
+    "homepage": "https://github.com/AilurusRedPanda/PandaIM#readme",
+    "dependencies": {
+        "argon2": "^0.28.3",
+        "express": "^4.17.2",
+        "mongoose": "^6.1.7"
+    }
+}
