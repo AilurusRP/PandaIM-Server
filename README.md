@@ -1,3 +1,3 @@
 # PandaIM
 
-Server side code of an instant message application.
+Server side code of an instant messaging application.
