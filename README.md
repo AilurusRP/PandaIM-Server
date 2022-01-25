@@ -6,7 +6,7 @@ Add a *config.js* file to the root path of the project before running, in which 
 
 ```javascript
 export default {
-    dbAddr: "mongodb://localhost/<Your Database Name>",
+    dbAddr: "mongodb://<Your Database Address>",
     root: "<Your Root Path>",
     port: 3000,
 };
