@@ -1,4 +1,4 @@
-import { authenticate } from "./db.js";
+import { authenticate, saveMsg } from "./db.js";
 
 function index(app, root) {
     app.get("/", (req, res) => res.sendFile(root + "index.html"));
@@ -7,15 +7,25 @@ function index(app, root) {
 function login(app) {
     app.post("/login", async function (req, res) {
         var info = req.body;
-        if ((await authenticate(info.uname, info.passwd)) === true) {
-            res.send({ text: "You've succeessfully logged in!" });
-        } else {
-            res.send({ text: "You are failed to login!" });
-        }
+        var success = Boolean(await authenticate(info.uname, info.passwd));
+        res.send({
+            uname: info.uname,
+            success: success,
+        });
+    });
+}
+
+function msg(app) {
+    app.post("/msg", async function (req, res) {
+        var { uname, time, msg } = req.body;
+        console.log(uname, time, msg);
+        var allMsgs = await saveMsg(uname, time, msg);
+        res.send(allMsgs);
     });
 }
 
 export default {
     index,
     login,
+    msg,
 };
