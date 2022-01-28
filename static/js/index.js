@@ -1,3 +1,5 @@
+const PORT = 8208;
+
 function checkLogin() {
     var uname = Cookies.getItem("uname");
     if (uname) goToChatPage();
@@ -34,7 +36,6 @@ function loginReqConfig() {
 
 function sendMsgReqConfig() {
     var date = new Date().valueOf();
-    console.log(date);
     var reqConfig = {
         method: "POST",
         headers: {
@@ -50,12 +51,13 @@ function sendMsgReqConfig() {
 }
 
 function goToChatPage() {
+    longConnect();
     document.querySelector("#loginBox").style.display = "none";
     document.querySelector("#chatBox").style.display = "block";
 }
 
 async function login() {
-    var res = await (await fetch("http://127.0.0.1:3000/login", loginReqConfig())).json();
+    var res = await (await fetch(`http://127.0.0.1:${PORT}/login`, loginReqConfig())).json();
     if (res.success) {
         console.log("You've successfully logged in!");
         Cookies.setItem("uname", res.uname);
@@ -66,7 +68,7 @@ async function login() {
 
 function printAllMsgs(res) {
     console.clear();
-    res.forEach((item) => {
+    res.forEach(item => {
         var { uname, time, msg } = item;
         var date = new Date(time);
         var dateStr = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()} ${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
@@ -74,7 +76,13 @@ function printAllMsgs(res) {
     });
 }
 
+function longConnect() {
+    let evtSrc = new EventSource("/longConnect");
+    evtSrc.onmessage = msg => printAllMsgs(JSON.parse(msg.data));
+}
+
 async function sendMsg() {
-    var res = await (await fetch("http://127.0.0.1:3000/msg", sendMsgReqConfig())).json();
-    printAllMsgs(res);
+    // console.log(getMsg())
+    var res = await (await fetch(`http://127.0.0.1:${PORT}/msg`, sendMsgReqConfig())).json();
+    // printAllMsgs(res);
 }
