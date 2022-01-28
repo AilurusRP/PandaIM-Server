@@ -12,11 +12,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 function setStatic() {
-    app.use(express.static(root + "static"));
+    app.use(express.static(`${root}static`));
 }
 
 function setRouter() {
-    Object.values(routes).forEach((route) => route(app, root));
+    Object.values(routes).forEach(route => route(app, root));
 }
 
 function startServer() {

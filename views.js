@@ -41,7 +41,7 @@ function msg(app) {
         console.log(uname, time, msg);
         var allMsgs = await saveMsg(uname, time, msg);
         sendToAllClients(allMsgs);
-        res.send({});
+        res.end();
     });
 }
 
