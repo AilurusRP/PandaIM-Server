@@ -1,4 +1,4 @@
-const PORT = 8208;
+const PORT = 3080;
 
 function checkLogin() {
     var uname = Cookies.getItem("uname");
@@ -82,7 +82,5 @@ function longConnect() {
 }
 
 async function sendMsg() {
-    // console.log(getMsg())
-    var res = await (await fetch(`http://127.0.0.1:${PORT}/msg`, sendMsgReqConfig())).json();
-    // printAllMsgs(res);
+    await fetch(`http://127.0.0.1:${PORT}/msg`, sendMsgReqConfig());
 }

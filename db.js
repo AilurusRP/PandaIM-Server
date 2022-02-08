@@ -38,4 +38,4 @@ async function getAllMsgs() {
     return allMsgs;
 }
 
-export { initDataBase, authenticate, saveMsg };
+export { initDataBase, authenticate, saveMsg, getAllMsgs };

@@ -1,6 +1,8 @@
-import { authenticate, saveMsg } from "./db.js";
+import jwt from "jsonwebtoken";
+import {authenticate, saveMsg, getAllMsgs} from "./db.js";
 
 let clients = [];
+const key = "test_key_2022";
 
 function sendToAllClients(msg) {
     clients.forEach(item => {
@@ -14,22 +16,42 @@ function index(app, root) {
 
 function login(app) {
     app.post("/login", async function (req, res) {
-        var info = req.body;
-        var success = Boolean(await authenticate(info.uname, info.passwd));
-        res.send({
+        let info = req.body;
+        console.log(info);
+        let success = Boolean(await authenticate(info.uname, info.passwd));
+
+        let token = "Bearer " + jwt.sign({
             uname: info.uname,
-            success: success,
+        }, key, {
+            expiresIn: "7d",
+        });
+
+        console.log(token);
+
+        res.send({
+            success,
+            token,
         });
     });
 }
 
 function longConnect(app) {
-    app.get("/longConnect", (req, res) => {
+    const setHeader = async (req, res) => {
+        let allMsgs = await getAllMsgs();
         res.setHeader("Cache-Control", "no-cache");
         res.setHeader("Content-Type", "text/event-stream");
         res.setHeader("Access-Control-Allow-Origin", "*");
         res.setHeader("Connection", "keep-alive");
         res.flushHeaders(); // flush the headers to establish SSE with client
+        if (req.query.client === "rn") res.write(`\n\ndata:${JSON.stringify(allMsgs)}\n\n`);
+    };
+
+    app.get("/longConnect", async (req, res) => {
+        await setHeader(req, res);
+        if (clients.map(x => x.uname)) {
+            clients = clients.filter(x => x.uname !== req.user.uname);
+        }
+        res.uname = req.user.uname;
         clients.push(res);
         console.log(`${clients.length} clients connected.`);
     });
@@ -37,9 +59,10 @@ function longConnect(app) {
 
 function msg(app) {
     app.post("/msg", async function (req, res) {
-        var { uname, time, msg } = req.body;
+        let uname = req.user.uname;
+        let {time, msg} = req.body;
         console.log(uname, time, msg);
-        var allMsgs = await saveMsg(uname, time, msg);
+        let allMsgs = await saveMsg(uname, time, msg);
         sendToAllClients(allMsgs);
         res.end();
     });
