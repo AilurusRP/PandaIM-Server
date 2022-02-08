@@ -6,13 +6,13 @@ import config from "./config.js";
 import {initDataBase} from "./db.js";
 
 const app = express();
-const {dbAddr, root, port} = config;
+const {dbAddr, root, port, secret} = config;
 
 // parse application/json
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(expressJwt({
-    secret: "test_key_2022",
+    secret,
     algorithms: ['HS256'],
     credentialsRequired: false,
     getToken: function fromHeaderOrQuerystring(req) {

@@ -1,8 +1,9 @@
 import jwt from "jsonwebtoken";
+import config from "./config.js";
 import {authenticate, saveMsg, getAllMsgs} from "./db.js";
 
+const {secret} = config;
 let clients = [];
-const key = "test_key_2022";
 
 function sendToAllClients(msg) {
     clients.forEach(item => {
@@ -22,7 +23,7 @@ function login(app) {
 
         let token = "Bearer " + jwt.sign({
             uname: info.uname,
-        }, key, {
+        }, secret, {
             expiresIn: "7d",
         });
 
