@@ -9,5 +9,6 @@ export default {
     dbAddr: "mongodb://<Your Database Address>",
     root: "<Your Root Path>",
     port: 3000,
+    secret: "Your secret key to encrypt the token",
 };
 ```
