@@ -1,8 +1,8 @@
 {
-    "name": "pandaim",
+    "name": "pandaim-server",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
+    "main": "src/app.ts",
     "type": "module",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,6 +25,10 @@
         "express": "^4.17.2",
         "express-jwt": "^6.1.0",
         "jsonwebtoken": "^8.5.1",
-        "mongoose": "^6.1.7"
+        "mongoose": "^6.1.7",
+        "ts-node": "^10.5.0"
+    },
+    "devDependencies": {
+        "ts-node":"^10.5.0"
     }
 }
