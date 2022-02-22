@@ -1,5 +1,5 @@
-import { Schema } from 'mongoose';
-import { mongoose } from './definitionFile.js';
+import { Schema } from "mongoose";
+import { mongoose } from "./definitionFile.js";
 
 const usersSchema: Schema = new mongoose.Schema({
     uname: String,
@@ -13,14 +13,14 @@ const msgsSchema: Schema = new mongoose.Schema({
 let users, msgs;
 
 function initCollections() {
-    users = mongoose.model('users', usersSchema);
-    msgs = mongoose.model('msgs', msgsSchema);
+    users = mongoose.model("users", usersSchema);
+    msgs = mongoose.model("msgs", msgsSchema);
 }
 
 async function initDataBase(dbAddr) {
-    mongoose.connection.on('connected', () => console.log('Database connected successfully!'));
-    mongoose.connection.on('error', () => console.error('Failed to connect database!'));
-    mongoose.connection.on('disconnected', () => console.log('Database disconnected!'));
+    mongoose.connection.on("connected", () => console.log("Database connected successfully!"));
+    mongoose.connection.on("error", () => console.error("Failed to connect database!"));
+    mongoose.connection.on("disconnected", () => console.log("Database disconnected!"));
     await mongoose.connect(dbAddr);
     initCollections();
 }
