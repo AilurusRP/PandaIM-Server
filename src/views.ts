@@ -9,10 +9,6 @@ function sendToAllClients(msg: Object) {
     clients.forEach(item => item.write(`data:${JSON.stringify(msg)}\n\n`));
 }
 
-function index(app: Application, root) {
-    app.get("/", (req, res) => res.sendFile(root + "index.html"));
-}
-
 function login(app: Application) {
     app.post("/login", async function (req, res) {
         let info = req.body;
@@ -62,7 +58,6 @@ function msg(app: Application) {
 }
 
 export default {
-    index,
     login,
     longConnect,
     msg,

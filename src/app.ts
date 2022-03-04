@@ -4,7 +4,7 @@ import config from "./config.js";
 import { initDataBase } from "./db.js";
 
 const app: Application = express();
-const { dbAddr, root, port, secret } = config;
+const { dbAddr, port, secret } = config;
 
 // parse application/json
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -20,17 +20,13 @@ app.use(
     }).unless({ path: ["/login", "/"] }),
 );
 
-function setStatic() {
-    app.use(express.static(`${root}static`));
-}
 
 function setRouter() {
-    Object.values(routes).forEach(route => route(app, root));
+    Object.values(routes).forEach(route => route(app));
 }
 
 function startServer() {
     initDataBase(dbAddr);
-    setStatic();
     setRouter();
     app.listen(port, () => console.log(`Listening to http://127.0.0.1:${port}`));
 }

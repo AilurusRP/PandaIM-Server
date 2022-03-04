@@ -7,7 +7,6 @@ Add a *config.ts* file to *src* before running, in which you need to set your po
 ```javascript
 export default {
     dbAddr: "mongodb://<Your Database Address>",
-    root: "<Your Root Path>",
     port: 3000,
     secret: "Your secret key to encrypt the token",
 };
