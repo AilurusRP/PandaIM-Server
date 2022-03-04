@@ -20,7 +20,7 @@ function login(app: Application) {
         if (info === undefined || JSON.stringify(info) === "{}") return res.send("Request body is empty!");
 
         let success = Boolean(await authenticate(info.uname, info.passwd));
-        if (!success) return res.send("Login failed!");
+        if (!success) return res.send({ success, err: "Login failed!" });
 
         let token = "Bearer " + jwt.sign({ uname: info.uname }, secret, { expiresIn: "7d" });
         console.log(token);
